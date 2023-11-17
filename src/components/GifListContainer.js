@@ -27,6 +27,7 @@
 
 import React, {useState, useEffect} from "react";
 import GifList from "./GifList";
+import GifSearch from "./GifSearch";
 
 const API_KEY = "IvKBlRjGHJN2rmcZIgeZX29vkQGuxhKk";
 const API_LINK = `https://api.giphy.com/v1/gifs/search?q=dolphin&api_key=${API_KEY}&rating=g`
@@ -40,16 +41,7 @@ function GifListContainer() {
     const [gifs, setGifs] = useState([])
 
 
-    useEffect(() => {
-        getData()
-    }, [])
 
-
-    
-    
-    
-    
-    
     function getData() {
         fetch(API_LINK)
         .then(resp => resp.json())
@@ -62,10 +54,25 @@ function GifListContainer() {
     }
 
 
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+
+    // // Creating function to handle search term
+    const onSubmit = async (query) => {
+        // Use the query to fetch data
+        const response = await fetch(`https://api.giphy.com/v1/gifs/search?q=${query}&api_key=${API_KEY}&limit=3`);
+        const data = await response.json();
+        // Do something with the data...
+        setGifs(data.data);
+    };
+
+
   return (
     <div>
-      <h1>Gif List</h1>
-       
+    <GifSearch onSubmit={onSubmit} />
     <GifList gifs={gifs}/>
     </div>
   );

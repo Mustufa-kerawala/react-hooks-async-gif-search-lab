@@ -4,10 +4,14 @@ import React, { useState } from 'react';
 const GifSearch = ({ onSubmit }) => {
     const [query, setQuery] = useState('');
 
+    
+    // Handling Submit
     const handleSubmit = event => {
         event.preventDefault();
         onSubmit(query);
     };
+
+
 
     // Handling the input change
     const handleChange = event => {
